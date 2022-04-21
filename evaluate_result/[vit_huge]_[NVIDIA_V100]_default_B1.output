@@ -1,0 +1,3 @@
+Namespace(batch_size=1, gpu_num=1, mode='familyseer', model='vit_huge', pre_tuned='./pre-tuned_data/Ansor/NVIDIA_V100/', tune=False)
+./pre-tuned_data/Ansor/NVIDIA_V100/-NHWC-B1-cuda.json
+Get model...

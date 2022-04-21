@@ -1,0 +1,8 @@
+resnet50_v1
+resnet152_v2
+mobilenet0.5
+mobilenetv2_0.5
+vit_huge
+bert_large
+roberta_large
+gpt2

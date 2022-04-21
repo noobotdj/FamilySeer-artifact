@@ -61,6 +61,7 @@ parser.add_argument('--batch_size', type=int, default=1)
 parser.add_argument("--tune", action='store_true')
 parser.add_argument('--mode', type=str, default="familyseer", help='choose the running mode:familyseer or ansor', required=False)
 parser.add_argument('--gpu_num', type=int, default=1)
+parser.add_argument('--pre_tuned', type=str, default='.', help='run_with_pre-tuned', required=False)
 
 args = parser.parse_args()
 print(args)
@@ -167,7 +168,8 @@ def get_name():
         model = args.model
         log_file = "%s-%s-B%d-%s.json" % (model, layout, batch_size, target.kind.name)
         model_file = "./models/%s-%s-B%d-%s.tar" % (model, layout, batch_size, target.kind.name)
-
+    log_file = args.pre_tuned +log_file
+    print(log_file)
 
 
 
@@ -840,7 +842,7 @@ print("Compile...")
 with auto_scheduler.ApplyHistoryBest(log_file):
     with tvm.transform.PassContext(opt_level=3, config={"relay.backend.use_auto_scheduler": True}):
         lib = relay.build(mod, target=target, params=params)
-        lib.export_library(model_file)
+        #lib.export_library(model_file)
         
 # Create graph executor
 dev = tvm.device(str(target), 0)

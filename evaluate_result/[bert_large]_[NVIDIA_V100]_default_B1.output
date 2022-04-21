@@ -1,0 +1,89 @@
+Namespace(batch_size=1, gpu_num=1, mode='familyseer', model='bert_large', pre_tuned='./pre-tuned_data/Ansor/NVIDIA_V100/', tune=False)
+./pre-tuned_data/Ansor/NVIDIA_V100/-NHWC-B1-cuda.json
+Get model...
+Extract tasks...
+========== Task 0  (workload key: ["9847f8cc0b305137f49f2c5c0c8ab25d", 128, 4096, 1024, 4096, 1024, 128, 1024]) ==========
+task weight: 24
+placeholder = PLACEHOLDER [128, 4096]
+placeholder = PLACEHOLDER [1024, 4096]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+placeholder = PLACEHOLDER [1024]
+T_add(ax0, ax1) = (T_dense[ax0, ax1] + placeholder[ax1])
+
+========== Task 1  (workload key: ["9847f8cc0b305137f49f2c5c0c8ab25d", 128, 1024, 4096, 1024, 4096, 128, 4096]) ==========
+task weight: 24
+placeholder = PLACEHOLDER [128, 1024]
+placeholder = PLACEHOLDER [4096, 1024]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+placeholder = PLACEHOLDER [4096]
+T_add(ax0, ax1) = (T_dense[ax0, ax1] + placeholder[ax1])
+
+========== Task 2  (workload key: ["9847f8cc0b305137f49f2c5c0c8ab25d", 128, 1024, 1024, 1024, 1024, 128, 1024]) ==========
+task weight: 24
+placeholder = PLACEHOLDER [128, 1024]
+placeholder = PLACEHOLDER [1024, 1024]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+placeholder = PLACEHOLDER [1024]
+T_add(ax0, ax1) = (T_dense[ax0, ax1] + placeholder[ax1])
+
+========== Task 3  (workload key: ["d2a28fdf41e83222456f5a6e5bf8a24a", 16, 128, 128, 16, 64, 128, 16, 128, 64]) ==========
+task weight: 24
+placeholder = PLACEHOLDER [16, 128, 128]
+placeholder = PLACEHOLDER [16, 64, 128]
+compute(b, i, j) += (placeholder[b, i, k]*placeholder[b, j, k])
+
+========== Task 4  (workload key: ["d7b65649a4dd54becea0a52aabbc5af5", 2048, 128, 2048, 128]) ==========
+task weight: 24
+placeholder = PLACEHOLDER [2048, 128]
+T_softmax_maxelem(i0) max= placeholder[i0, k]
+T_softmax_exp(i0, i1) = tir.exp((placeholder[i0, i1] - T_softmax_maxelem[i0]))
+T_softmax_expsum(i0) += T_softmax_exp[i0, k]
+T_softmax_norm(i0, i1) = (T_softmax_exp[i0, i1]/T_softmax_expsum[i0])
+
+========== Task 5  (workload key: ["d2a28fdf41e83222456f5a6e5bf8a24a", 16, 128, 64, 16, 128, 64, 16, 128, 128]) ==========
+task weight: 24
+placeholder = PLACEHOLDER [16, 128, 64]
+placeholder = PLACEHOLDER [16, 128, 64]
+compute(b, i, j) += (placeholder[b, i, k]*placeholder[b, j, k])
+
+========== Task 6  (workload key: ["9847f8cc0b305137f49f2c5c0c8ab25d", 128, 1024, 3072, 1024, 3072, 128, 3072]) ==========
+task weight: 24
+placeholder = PLACEHOLDER [128, 1024]
+placeholder = PLACEHOLDER [3072, 1024]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+placeholder = PLACEHOLDER [3072]
+T_add(ax0, ax1) = (T_dense[ax0, ax1] + placeholder[ax1])
+
+========== Task 7  (workload key: ["6629ea5cbcaabf7bda37f634dfc99590", 128, 1, 1024, 128, 1, 1]) ==========
+task weight: 49
+placeholder = PLACEHOLDER [128, 1, 1024]
+placeholder_red(ax0, ax1, ax2) += placeholder[ax0, ax1, k2]
+T_divide(ax0, ax1, ax2) = (placeholder_red[ax0, ax1, ax2]/1024f)
+
+========== Task 8  (workload key: ["a68463502d0cce4438445e8af2c8e9ca", 128, 1, 1024, 128, 1, 1, 128, 1, 1]) ==========
+task weight: 49
+placeholder = PLACEHOLDER [128, 1, 1024]
+placeholder = PLACEHOLDER [128, 1, 1]
+T_subtract(ax0, ax1, ax2) = (placeholder[ax0, ax1, ax2] - placeholder[ax0, ax1, 0])
+T_multiply(ax0, ax1, ax2) = (T_subtract[ax0, ax1, ax2]*T_subtract[ax0, ax1, ax2])
+T_multiply_red(ax0, ax1, ax2) += T_multiply[ax0, ax1, k2]
+T_divide(ax0, ax1, ax2) = (T_multiply_red[ax0, ax1, ax2]/1024f)
+
+========== Task 9  (workload key: ["1f95b40beadc7daa7da7d714f95b3860", 1, 1024, 1024, 1024, 1024, 1, 1024]) ==========
+task weight: 1
+placeholder = PLACEHOLDER [1, 1024]
+placeholder = PLACEHOLDER [1024, 1024]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+placeholder = PLACEHOLDER [1024]
+T_add(ax0, ax1) = (T_dense[ax0, ax1] + placeholder[ax1])
+T_tanh(ax0, ax1) = tir.tanh(T_add[ax0, ax1])
+
+========== Task 10  (workload key: ["9847f8cc0b305137f49f2c5c0c8ab25d", 1, 1024, 2, 1024, 2, 1, 2]) ==========
+task weight: 1
+placeholder = PLACEHOLDER [1, 1024]
+placeholder = PLACEHOLDER [2, 1024]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+placeholder = PLACEHOLDER [2]
+T_add(ax0, ax1) = (T_dense[ax0, ax1] + placeholder[ax1])
+
+Compile...
