@@ -430,7 +430,7 @@ def get_network(name, batch_size, layout="NHWC", dtype="float32", use_sparse=Fal
         input_name = "input1"
         input_shape = (batch_size, seq_length, seq_length)
         shape_dict = {input_name: input_shape}
-        
+        current_pwd = os.getcwd()
         onnx_model = onnx.load("./onnx_models/gpt2-10.onnx")
         mod, params = relay.frontend.from_onnx(onnx_model, shape_dict)
         
@@ -842,7 +842,6 @@ print("Compile...")
 with auto_scheduler.ApplyHistoryBest(log_file):
     with tvm.transform.PassContext(opt_level=3, config={"relay.backend.use_auto_scheduler": True}):
         lib = relay.build(mod, target=target, params=params)
-        #lib.export_library(model_file)
         
 # Create graph executor
 dev = tvm.device(str(target), 0)

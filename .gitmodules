@@ -1,3 +1,9 @@
 [submodule "tvm"]
 	path = tvm
 	url = https://github.com/noobotdj/tvm.git
+[submodule "scripts/XLA/gpt-2-tensorflow2.0"]
+	path = scripts/XLA/gpt-2-tensorflow2.0
+	url = https://github.com/akanyaani/gpt-2-tensorflow2.0.git
+[submodule "scripts/XLA/vit"]
+	path = scripts/XLA/vit
+	url = https://github.com/protonx-engineering/vit.git

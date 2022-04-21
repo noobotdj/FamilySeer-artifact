@@ -1,5 +1,5 @@
 # Get started 
-This tutorial contains an example of using FamilySeer and Ansor to train the model.
+This tutorial contains an example of using Tensorflow XLA to evaluate the model.
 
 # Requirements
 You may need to install the following package to run this example.

@@ -1,0 +1,96 @@
+Namespace(batch_size=1, gpu_num=1, mode='familyseer', model='vit_huge', pre_tuned='../pre-tuned_data/FamilySeer/NVIDIA_V100/', tune=False)
+../pre-tuned_data/FamilySeer/NVIDIA_V100/vit_huge-NHWC-B1-cuda.json
+Get model...
+Extract tasks...
+========== Task 0  (workload key: ["9847f8cc0b305137f49f2c5c0c8ab25d", 1, 1280, 1000, 1280, 1000, 1, 1000]) ==========
+task weight: 1
+placeholder = PLACEHOLDER [1, 1280]
+placeholder = PLACEHOLDER [1000, 1280]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+placeholder = PLACEHOLDER [1000]
+T_add(ax0, ax1) = (T_dense[ax0, ax1] + placeholder[ax1])
+
+========== Task 1  (workload key: ["61f56dfd63fda28bc8bcf85739c8e9e3", 197, 5120, 1280, 5120, 197, 1280]) ==========
+task weight: 32
+placeholder = PLACEHOLDER [197, 5120]
+placeholder = PLACEHOLDER [1280, 5120]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+
+========== Task 2  (workload key: ["61f56dfd63fda28bc8bcf85739c8e9e3", 197, 1280, 5120, 1280, 197, 5120]) ==========
+task weight: 32
+placeholder = PLACEHOLDER [197, 1280]
+placeholder = PLACEHOLDER [5120, 1280]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+
+========== Task 3  (workload key: ["61f56dfd63fda28bc8bcf85739c8e9e3", 197, 1024, 1280, 1024, 197, 1280]) ==========
+task weight: 32
+placeholder = PLACEHOLDER [197, 1024]
+placeholder = PLACEHOLDER [1280, 1024]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+
+========== Task 4  (workload key: ["d2a28fdf41e83222456f5a6e5bf8a24a", 16, 197, 197, 16, 64, 197, 16, 197, 64]) ==========
+task weight: 32
+placeholder = PLACEHOLDER [16, 197, 197]
+placeholder = PLACEHOLDER [16, 64, 197]
+compute(b, i, j) += (placeholder[b, i, k]*placeholder[b, j, k])
+
+========== Task 5  (workload key: ["cbd44ab40cd3043d1c2bce7ddb1f6392", 1, 16, 197, 197, 1, 16, 197, 197]) ==========
+task weight: 32
+placeholder = PLACEHOLDER [1, 16, 197, 197]
+T_softmax_maxelem(i0, i1, i2) max= placeholder[i0, i1, i2, k]
+T_softmax_exp(i0, i1, i2, i3) = tir.exp((placeholder[i0, i1, i2, i3] - T_softmax_maxelem[i0, i1, i2]))
+T_softmax_expsum(i0, i1, i2) += T_softmax_exp[i0, i1, i2, k]
+T_softmax_norm(i0, i1, i2, i3) = (T_softmax_exp[i0, i1, i2, i3]/T_softmax_expsum[i0, i1, i2])
+
+========== Task 6  (workload key: ["d2a28fdf41e83222456f5a6e5bf8a24a", 16, 197, 64, 16, 197, 64, 16, 197, 197]) ==========
+task weight: 32
+placeholder = PLACEHOLDER [16, 197, 64]
+placeholder = PLACEHOLDER [16, 197, 64]
+compute(b, i, j) += (placeholder[b, i, k]*placeholder[b, j, k])
+
+========== Task 7  (workload key: ["61f56dfd63fda28bc8bcf85739c8e9e3", 197, 1280, 3072, 1280, 197, 3072]) ==========
+task weight: 32
+placeholder = PLACEHOLDER [197, 1280]
+placeholder = PLACEHOLDER [3072, 1280]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+
+========== Task 8  (workload key: ["61f56dfd63fda28bc8bcf85739c8e9e3", 196, 768, 1280, 768, 196, 1280]) ==========
+task weight: 1
+placeholder = PLACEHOLDER [196, 768]
+placeholder = PLACEHOLDER [1280, 768]
+T_dense(i, j) += (placeholder[i, k]*placeholder[j, k])
+
+========== Task 9  (workload key: ["14d9fc1688d29869e365273068fa6d63", 1, 197, 1280, 1, 197, 1]) ==========
+task weight: 64
+placeholder = PLACEHOLDER [1, 197, 1280]
+placeholder_red(ax0, ax1, ax2) += placeholder[ax0, ax1, k2]
+T_divide(ax0, ax1, ax2) = (placeholder_red[ax0, ax1, ax2]/1280f)
+
+========== Task 10  (workload key: ["a652a2dd5f50dc852e37cbe2df08a2a7", 1, 197, 1280, 1, 197, 1, 1, 197, 1]) ==========
+task weight: 64
+placeholder = PLACEHOLDER [1, 197, 1280]
+placeholder = PLACEHOLDER [1, 197, 1]
+T_subtract(ax0, ax1, ax2) = (placeholder[ax0, ax1, ax2] - placeholder[ax0, ax1, 0])
+T_multiply(ax0, ax1, ax2) = (T_subtract[ax0, ax1, ax2]*T_subtract[ax0, ax1, ax2])
+T_multiply_red(ax0, ax1, ax2) += T_multiply[ax0, ax1, k2]
+T_divide(ax0, ax1, ax2) = (T_multiply_red[ax0, ax1, ax2]/1280f)
+
+========== Task 11  (workload key: ["7e0ee3e68202fb0e86f67b042b2e5f7a", 1, 1280, 1, 1]) ==========
+task weight: 1
+placeholder = PLACEHOLDER [1, 1280]
+placeholder_red(ax0, ax1) += placeholder[ax0, k1]
+T_divide(ax0, ax1) = (placeholder_red[ax0, ax1]/1280f)
+
+========== Task 12  (workload key: ["5547501cabf367d8cffd9459ec18eb50", 1, 1280, 1, 1, 1, 1]) ==========
+task weight: 1
+placeholder = PLACEHOLDER [1, 1280]
+placeholder = PLACEHOLDER [1, 1]
+T_subtract(ax0, ax1) = (placeholder[ax0, ax1] - placeholder[ax0, 0])
+T_multiply(ax0, ax1) = (T_subtract[ax0, ax1]*T_subtract[ax0, ax1])
+T_multiply_red(ax0, ax1) += T_multiply[ax0, k1]
+T_divide(ax0, ax1) = (T_multiply_red[ax0, ax1]/1280f)
+
+Compile...
+Evaluate inference time cost...
+Mean inference time (std dev): 50.57 ms (0.02 ms)
+network: vit_huge, tuning time: 00:00:00, 5.555152893066406e-05
