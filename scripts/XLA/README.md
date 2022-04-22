@@ -2,7 +2,7 @@
 This tutorial contains an example of using Tensorflow XLA to evaluate the model.
 
 # Requirements
-You may need to install the following package to run this example.
+You may need to install the following packages to run this example.
 ```
 pip3 install tensorflow==2.6.0 tensorflow-text==2.6.0 tf-sentencepiece==0.1.90 tensorflow-addons==0.16.1 tensorflow-hub==0.12.0
 ```
