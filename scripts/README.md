@@ -18,13 +18,13 @@ mkdir onnx_models
 mv gpt2-10.onnx onnx_models/
 ```
 # Example
-Since auto-tuning needs hours or days to find good result, we prepare a pre-tuned data so you can run directly without tuning. But you can still try tuning your own model in your own machine using the following command line.
+Since auto-tuning needs hours or days to find a good result, we prepare pre-tuned data so you can run directly without tuning. But you can still try tuning your model in your machine using the following command line.
 
 __Run with pre-tuned data__
 ```
 ./run_with_pre-tuned.sh
 ```
-The script will create a `evaluation_result` folder and the result will be stored in this folder. By default, the script will run all eight model mentioned on the paper. You can change `eval_list` to run different model.
+The script will create the `evaluation_result` folder, and the result will be stored in this folder. By default, the script will run all eight models mentioned in the paper. You can change `eval_list` to run different models.
 
 If you want to run XLA, please go to `./XLA/`.
 
@@ -58,4 +58,4 @@ python3 tune_relay_gpu.py --model mobilenetv2_0.5  --tune
 python3 tune_relay_x86.py --model mobilenetv2_0.5  --tune
 ```
 
-If you want to try other models, change the `--model`. Supported model can be found in [TVM tutorials](https://tvm.apache.org/docs/how_to/compile_models/index.html).
+If you want to try other models, change the `--model`. The supported model can be found in [TVM tutorials](https://tvm.apache.org/docs/how_to/compile_models/index.html).

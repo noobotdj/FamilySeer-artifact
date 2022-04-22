@@ -12,9 +12,9 @@ Run XLA with script:
 ```
 ./run_XLA.sh
 ```
-The script will create a `evaluation_result` folder and the result will be stored in this folder. 
+The script will create the `evaluation_result` folder, and the result will be stored in this folder. 
 
-XLA requires models from Tensorflow Hub and only six of them can be found on Tensorflow Hub, we find GPT2 and ViT-Huge from other repos, please follow the command line to test GPT2 and ViT-Huge.
+XLA requires models from Tensorflow Hub, and only six of them can be found on Tensorflow Hub. We find GPT2 and ViT-Huge from other repos. Please follow the command line to test GPT2 and ViT-Huge.
 ```
 //GPT2
 cp sequence_generator.py gpt-2-tensorflow2.0/

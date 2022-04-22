@@ -14,7 +14,7 @@ Run `build_tvm.sh` to install TVM.
 ```
 ./build_tvm.sh
 ```
-TVM requires python and llvm. If you have trouble running `build_tvm.sh`, please follow the command line below.
+TVM requires python and llvm. Please follow the command line below if you have trouble running `build_tvm.sh`.
 
 ```
 cd tvm
