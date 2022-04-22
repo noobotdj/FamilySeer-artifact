@@ -7,7 +7,7 @@ This tutorial contains examples of the following auto-tuning framework.
  - FamilySeer
 
 # Requirements
-You may need to install the following package to run this example.
+You may need to install the following packages to run this example.
 ```
 pip3 install mxnet==1.8.0 torch==1.8.0 torchvision==0.9.0 transformers==4.11.2 vit-pytorch==0.24.3 huggingface-hub==0.0.18 onnx==1.10.1 gluonnlp==0.10.0
 ```
