@@ -1,5 +1,5 @@
 # FamilySeer-artifact
-Evaluation code of FamilySeer
+Evaluation code of FamilySeer.
 
 # Install TVM
 Clone the repo.
