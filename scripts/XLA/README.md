@@ -25,5 +25,5 @@ python3 sequence_generator.py
 //ViT-Huge (Before doing this, return to the ./XLA folder)
 cp train.py vit/
 cd vit/
-python3 train.py
+python3 train.py --model huge
 ```
