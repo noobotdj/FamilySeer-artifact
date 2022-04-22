@@ -59,6 +59,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default=None, help='a chosen model, like resnet18_v2', required=True)
 parser.add_argument('--batch_size', type=int, default=1)
 parser.add_argument('--n_trial', type=int, default=20000)
+parser.add_argument('--mode', type=str, default="familyseer", help='choose the running mode:familyseer or ansor', required=False)
 parser.add_argument("--tune", action='store_true')
 parser.add_argument('--pre_tuned', type=str, default='.', help='run_with_pre-tuned', required=False)
 
@@ -775,8 +776,10 @@ def run_tuning():
         runner=auto_scheduler.LocalRunner(repeat=10, enable_cpu_cache_flush=True, timeout=35),
         measure_callbacks=[auto_scheduler.RecordToFile(log_file)],
     )
-
-    tuner.tune(tune_option)
+    if args.mode == "ansor":
+        tuner.tune(tune_option)
+    else:
+        tuner.tune(tune_option,search_policy="sketch.xgb.family_op")
 
 
 # We do not run the tuning in our webpage server since it takes too long.

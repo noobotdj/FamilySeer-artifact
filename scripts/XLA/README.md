@@ -4,25 +4,26 @@ This tutorial contains an example of using Tensorflow XLA to evaluate the model.
 # Requirements
 You may need to install the following package to run this example.
 ```
-pip3 install mxnet==1.8.0 torch==1.8.0 torchvision==0.9.0 transformers==4.11.2 vit-pytorch==0.24.3 huggingface-hub==0.0.18 onnx==1.10.1 gluonnlp==0.10.0
-```
-If you want to tune GPT2, you need to download the onnx model of GPT2 from [here](https://github.com/onnx/models/blob/master/text/machine_comprehension/gpt-2/model/gpt2-10.onnx). 
-Then run the following command line:
-```
-mkdir onnx_models
-mv gpt2-10.onnx onnx_models/
+pip3 install tensorflow==2.6.0 tensorflow-text==2.6.0 tf-sentencepiece==0.1.90 tensorflow-addons==0.16.1 tensorflow-hub==0.12.0
 ```
 
 # Example
-[guide-level-explanation]: #guide-level-explanation
-Run an example of FamilySeer:
+Run XLA with script:
 ```
-python3 tune_network_gpu.py --model mobilenetv2_0.5 --gpu_num 2 --tune
+./run_XLA.sh
 ```
-You can change `--gpu_num` number according to the GPUs you have.
+The script will create a `evaluation_result` folder and the result will be stored in this folder. 
 
-Run an example of Ansor:
+XLA requires models from Tensorflow Hub and only six of them can be found on Tensorflow Hub, we find GPT2 and ViT-Huge from other repos, please follow the command line to test GPT2 and ViT-Huge.
 ```
-python3 tune_network_gpu.py --model mobilenetv2_0.5  --tune --mode ansor
+//GPT2
+cp sequence_generator.py gpt-2-tensorflow2.0/
+cd gpt-2-tensorflow2.0/
+python3 train_gpt2.py
+python3 sequence_generator.py
+
+//ViT-Huge (Before doing this, return to the ./XLA folder)
+cp train.py vit/
+cd vit/
+python3 train.py
 ```
-If you want to try other models, change the `--model`. Supported model can be found in `./modellist`. You can also try you own model following the [TVM tutorials](https://tvm.apache.org/docs/how_to/compile_models/index.html).
